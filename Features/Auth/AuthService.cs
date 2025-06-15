@@ -1,4 +1,5 @@
 using csharp_chat_api.Common.Exceptions;
+using csharp_chat_api.Common.Mapping;
 using csharp_chat_api.Features.Users;
 using csharp_chat_api.Infrastructure.Security;
 
@@ -26,15 +27,12 @@ public class AuthService : IAuthService
 
         var token = _jwtTokenService.GenerateToken(user);
 
-        return new LoginResponseDto
-        {
-            Token = token,
-            Id = user.Id,
-            Email = user.Email,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            ExpiresAt = DateTime.UtcNow.AddHours(24)
-        };
+        var loginResponseDto = MappingProfile.ToLoginResponseDto(user);
+
+        loginResponseDto.Token = token;
+        loginResponseDto.ExpiresAt = DateTime.UtcNow.AddHours(24);
+
+        return loginResponseDto;
     }
 
     public async Task<LoginResponseDto> Register(RegisterDto registerDto)
@@ -45,26 +43,18 @@ public class AuthService : IAuthService
 
         var hashedPassword = _passwordHasher.HashPassword(registerDto.Password);
 
-        var newUser = new User
-        {
-            Email = registerDto.Email,
-            Password = hashedPassword,
-            FirstName = registerDto.FirstName,
-            LastName = registerDto.LastName
-        };
+        var newUser = MappingProfile.ToUser(registerDto);
+        newUser.Password = hashedPassword;
 
         var createdUser = await _userRepository.CreateUser(newUser);
 
         var token = _jwtTokenService.GenerateToken(createdUser);
 
-        return new LoginResponseDto
-        {
-            Token = token,
-            Id = createdUser.Id,
-            Email = createdUser.Email,
-            FirstName = createdUser.FirstName,
-            LastName = createdUser.LastName,
-            ExpiresAt = DateTime.UtcNow.AddHours(24)
-        };
+        var loginResponseDto = MappingProfile.ToLoginResponseDto(createdUser);
+
+        loginResponseDto.Token = token;
+        loginResponseDto.ExpiresAt = DateTime.UtcNow.AddHours(24);
+
+        return loginResponseDto;
     }
 }
