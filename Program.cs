@@ -4,6 +4,7 @@ using csharp_chat_api.Features;
 using csharp_chat_api.Features.Users;
 using csharp_chat_api.Infrastructure.Configuration;
 using csharp_chat_api.Infrastructure.Data;
+using csharp_chat_api.Infrastructure.Middleware;
 using csharp_chat_api.Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -88,6 +89,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 
