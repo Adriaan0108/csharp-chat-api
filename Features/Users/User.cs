@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using csharp_chat_api.Features.Shared;
+using csharp_chat_api.Features.UserChats;
 
 namespace csharp_chat_api.Features.Users;
 
@@ -13,4 +14,6 @@ public class User : BaseModel
     [Column("first_name")] public string FirstName { get; set; }
 
     [Column("last_name")] public string LastName { get; set; }
+
+    public ICollection<UserChat> UserChats { get; set; } = new List<UserChat>();
 }
