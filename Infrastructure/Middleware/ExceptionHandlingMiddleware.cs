@@ -1,6 +1,6 @@
-using System.Net;
 using System.Text.Json;
 using csharp_chat_api.Common.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace csharp_chat_api.Infrastructure.Middleware;
 
@@ -21,25 +21,63 @@ public class ExceptionHandlingMiddleware
         }
         catch (Exception error)
         {
-            context.Response.ContentType = "application/json";
+            var statusCode = GetStatusCode(error);
 
-            context.Response.StatusCode = error switch
+            context.Response.ContentType = "application/problem+json";
+            context.Response.StatusCode = statusCode;
+
+            var problemDetails = new ProblemDetails
             {
-                BadRequestException => (int)HttpStatusCode.BadRequest,
-                ForbiddenException => (int)HttpStatusCode.Forbidden,
-                NotFoundException => (int)HttpStatusCode.NotFound,
-                ServiceUnavailableException => (int)HttpStatusCode.ServiceUnavailable,
-                UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized,
-                UnprocessableEntityException => (int)HttpStatusCode.UnprocessableEntity,
-                _ => (int)HttpStatusCode.InternalServerError
+                Type = $"https://httpstatuses.com/{statusCode}",
+                Title = GetTitle(error),
+                Status = statusCode,
+                Detail = GetDetail(error),
+                Instance = context.Request.Path
             };
 
-            var message = error.InnerException != null
-                ? $"{error.Message} | Inner Exception: {error.InnerException.Message}"
-                : error.Message;
+            var result = JsonSerializer.Serialize(problemDetails, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
 
-            var result = JsonSerializer.Serialize(new { message });
             await context.Response.WriteAsync(result);
         }
+    }
+
+    private static int GetStatusCode(Exception error)
+    {
+        return error switch
+        {
+            BadRequestException => 400,
+            ForbiddenException => 403,
+            NotFoundException => 404,
+            ConflictException => 409,
+            ServiceUnavailableException => 503,
+            UnauthorizedAccessException => 401,
+            UnprocessableEntityException => 422,
+            _ => 500
+        };
+    }
+
+    private static string GetTitle(Exception error)
+    {
+        return error switch
+        {
+            BadRequestException => "Bad Request",
+            ForbiddenException => "Forbidden",
+            NotFoundException => "Not Found",
+            ConflictException => "Conflict",
+            ServiceUnavailableException => "Service Unavailable",
+            UnauthorizedAccessException => "Unauthorized",
+            UnprocessableEntityException => "Unprocessable Entity",
+            _ => "Internal Server Error"
+        };
+    }
+
+    private static string GetDetail(Exception error)
+    {
+        return error.InnerException != null
+            ? $"{error.Message} | Inner Exception: {error.InnerException.Message}"
+            : error.Message ?? "An unexpected error occurred";
     }
 }
