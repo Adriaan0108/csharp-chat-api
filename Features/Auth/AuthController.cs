@@ -22,4 +22,13 @@ public class AuthController : ControllerBase
 
         return Ok(user);
     }
+
+    [HttpPost("register")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+    {
+        var user = await _authService.Register(registerDto);
+
+        return Ok(user);
+    }
 }
