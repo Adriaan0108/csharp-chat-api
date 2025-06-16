@@ -7,7 +7,7 @@ namespace csharp_chat_api.Features.Chats;
 [Table("chats")]
 public class Chat : BaseModel
 {
-    [Column("name")] public string Name { get; set; }
+    [Column("title")] public string Title { get; set; }
 
     [Column("description")] public string Description { get; set; }
 

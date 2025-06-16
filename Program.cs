@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using csharp_chat_api.Features;
+using csharp_chat_api.Features.Chats;
 using csharp_chat_api.Features.UserChats;
 using csharp_chat_api.Features.Users;
 using csharp_chat_api.Infrastructure.Configuration;
@@ -75,7 +76,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserChatRepository, UserChatRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IUserChatService, UserChatService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
