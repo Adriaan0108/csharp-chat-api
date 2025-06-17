@@ -4,5 +4,5 @@ namespace csharp_chat_api.Features.Users;
 
 public interface IUserService
 {
-    Task<List<ChatDto>> GetUserChats(long userId);
+    Task<IEnumerable<ChatDto>> GetUserChats(long userId);
 }

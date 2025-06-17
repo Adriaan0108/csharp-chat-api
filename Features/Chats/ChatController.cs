@@ -20,4 +20,12 @@ public class ChatController : ControllerBase
 
         return Ok(users);
     }
+
+    [HttpGet("{chatId}/messages")]
+    public async Task<IActionResult> GetChatMessages(long chatId)
+    {
+        var users = await _chatService.GetChatMessages(chatId);
+
+        return Ok(users);
+    }
 }

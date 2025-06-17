@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using csharp_chat_api.Features.Messages;
 using csharp_chat_api.Features.Shared;
 using csharp_chat_api.Features.UserChats;
 
@@ -16,4 +17,6 @@ public class User : BaseModel
     [Column("last_name")] public string LastName { get; set; }
 
     public ICollection<UserChat> UserChats { get; set; } = new List<UserChat>();
+
+    public ICollection<Message> SentMessages { get; set; } = new List<Message>();
 }

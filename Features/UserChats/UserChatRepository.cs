@@ -14,7 +14,7 @@ public class UserChatRepository : IUserChatRepository
         _context = context;
     }
 
-    public async Task<List<User>> GetChatUsers(long chatId)
+    public async Task<IList<User>> GetChatUsers(long chatId)
     {
         return await _context.UserChats
             .Where(uc => uc.ChatId == chatId)
@@ -23,7 +23,7 @@ public class UserChatRepository : IUserChatRepository
             .ToListAsync();
     }
 
-    public async Task<List<Chat>> GetUserChats(long userId)
+    public async Task<IList<Chat>> GetUserChats(long userId)
     {
         return await _context.UserChats
             .Where(uc => uc.UserId == userId)

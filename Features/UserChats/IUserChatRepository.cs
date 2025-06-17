@@ -5,7 +5,7 @@ namespace csharp_chat_api.Features.UserChats;
 
 public interface IUserChatRepository
 {
-    Task<List<User>> GetChatUsers(long chatId);
+    Task<IList<User>> GetChatUsers(long chatId);
 
-    Task<List<Chat>> GetUserChats(long userId);
+    Task<IList<Chat>> GetUserChats(long userId);
 }

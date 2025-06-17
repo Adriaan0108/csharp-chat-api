@@ -1,8 +1,11 @@
+using csharp_chat_api.Features.Messages;
 using csharp_chat_api.Features.Users;
 
 namespace csharp_chat_api.Features.Chats;
 
 public interface IChatService
 {
-    Task<List<UserDto>> GetChatUsers(long chatId);
+    Task<IEnumerable<UserDto>> GetChatUsers(long chatId);
+
+    Task<IEnumerable<MessageDto>> GetChatMessages(long chatId);
 }

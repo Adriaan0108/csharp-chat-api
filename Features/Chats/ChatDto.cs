@@ -1,14 +1,10 @@
+using csharp_chat_api.Features.Shared;
+
 namespace csharp_chat_api.Features.Chats;
 
-public class ChatDto
+public class ChatDto : BaseDto
 {
     public string Title { get; set; }
 
     public string Description { get; set; }
-
-    public long Id { get; set; }
-
-    public DateTime CreatedAt { get; set; }
-
-    public DateTime UpdatedAt { get; set; }
 }

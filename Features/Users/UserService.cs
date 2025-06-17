@@ -13,7 +13,7 @@ public class UserService : IUserService
         _userChatRepository = userChatRepository;
     }
 
-    public async Task<List<ChatDto>> GetUserChats(long userId)
+    public async Task<IEnumerable<ChatDto>> GetUserChats(long userId)
     {
         var chats = await _userChatRepository.GetUserChats(userId);
 

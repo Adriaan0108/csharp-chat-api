@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json;
 using csharp_chat_api.Features;
 using csharp_chat_api.Features.Chats;
+using csharp_chat_api.Features.Messages;
 using csharp_chat_api.Features.UserChats;
 using csharp_chat_api.Features.Users;
 using csharp_chat_api.Infrastructure.Configuration;
@@ -74,6 +75,7 @@ builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"))
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserChatRepository, UserChatRepository>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
