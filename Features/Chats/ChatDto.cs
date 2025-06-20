@@ -7,4 +7,6 @@ public class ChatDto : BaseDto
     public string Title { get; set; }
 
     public string Description { get; set; }
+
+    public bool IsDirectChat { get; set; }
 }

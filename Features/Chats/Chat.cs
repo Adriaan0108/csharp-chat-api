@@ -12,6 +12,8 @@ public class Chat : BaseModel
 
     [Column("description")] public string Description { get; set; }
 
+    [Column("is_direct_chat")] public bool IsDirectChat { get; set; }
+
     public ICollection<UserChat> UserChats { get; set; } = new List<UserChat>();
 
     public ICollection<Message> Messages { get; set; } = new List<Message>();
