@@ -42,6 +42,20 @@ public class ChatService : IChatService
 
     public async Task<Chat> CreateChat(CreateChatDto createChatDto)
     {
+        if (createChatDto.UserIds.Count > 0)
+        {
+            var userId = _currentUserService.GetCurrentUserId();
+
+            // Remove all existing current user IDs
+            createChatDto.UserIds.RemoveAll(id => id == userId);
+
+            // Add current user ID once
+            createChatDto.UserIds.Add(userId);
+
+            // Remove any other duplicates (if any)
+            createChatDto.UserIds = createChatDto.UserIds.Distinct().ToList();
+        }
+
         if (createChatDto.IsDirectChat && createChatDto.UserIds.Count > 2)
             throw new BadRequestException("Cannot create direct chat with more than 2 users");
 

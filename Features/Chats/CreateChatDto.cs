@@ -10,5 +10,5 @@ public class CreateChatDto
 
     [Required] public bool IsDirectChat { get; set; }
 
-    public IList<int> UserIds { get; set; }
+    public List<long> UserIds { get; set; }
 }
