@@ -29,15 +29,6 @@ public class ChatService : IChatService
         return userDtos;
     }
 
-    public async Task<IEnumerable<MessageDto>> GetChatMessages(long chatId)
-    {
-        var messages = await _messageRepository.GetChatMessages(chatId);
-
-        var messageDtos = MappingProfile.ToMessageDto(messages);
-
-        return messageDtos;
-    }
-
     public async Task<Chat> CreateChat(CreateChatDto createChatDto)
     {
         if (createChatDto.IsDirectChat && createChatDto.UserIds.Count > 2)

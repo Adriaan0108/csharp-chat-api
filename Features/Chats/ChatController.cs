@@ -1,3 +1,4 @@
+using csharp_chat_api.Features.Messages;
 using Microsoft.AspNetCore.Mvc;
 
 namespace csharp_chat_api.Features.Chats;
@@ -7,10 +8,12 @@ namespace csharp_chat_api.Features.Chats;
 public class ChatController : ControllerBase
 {
     private readonly IChatService _chatService;
+    private readonly IMessageService _messageService;
 
-    public ChatController(IChatService chatService)
+    public ChatController(IChatService chatService, IMessageService messageService)
     {
         _chatService = chatService;
+        _messageService = messageService;
     }
 
     [HttpPost]
@@ -32,7 +35,7 @@ public class ChatController : ControllerBase
     [HttpGet("{chatId}/messages")]
     public async Task<IActionResult> GetChatMessages(long chatId)
     {
-        var users = await _chatService.GetChatMessages(chatId);
+        var users = await _messageService.GetChatMessages(chatId);
 
         return Ok(users);
     }
