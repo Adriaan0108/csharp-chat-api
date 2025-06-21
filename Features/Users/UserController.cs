@@ -12,12 +12,4 @@ public class UserController : ControllerBase
     {
         _userService = userService;
     }
-
-    [HttpGet("{userId}/chats")]
-    public async Task<IActionResult> GetUserChats(long userId)
-    {
-        var chats = await _userService.GetUserChats(userId);
-
-        return Ok(chats);
-    }
 }

@@ -1,22 +1,22 @@
 using csharp_chat_api.Common.Exceptions;
 using csharp_chat_api.Common.Mapping;
-using csharp_chat_api.Features.Messages;
 using csharp_chat_api.Features.UserChats;
 using csharp_chat_api.Features.Users;
+using csharp_chat_api.Infrastructure.Security;
 
 namespace csharp_chat_api.Features.Chats;
 
 public class ChatService : IChatService
 {
     private readonly IChatRepository _chatRepository;
-    private readonly IMessageRepository _messageRepository;
+    private readonly ICurrentUserService _currentUserService;
     private readonly IUserChatRepository _userChatRepository;
 
-    public ChatService(IUserChatRepository userChatRepository, IMessageRepository messageRepository,
+    public ChatService(IUserChatRepository userChatRepository, ICurrentUserService currentUserService,
         IChatRepository chatRepository)
     {
         _userChatRepository = userChatRepository;
-        _messageRepository = messageRepository;
+        _currentUserService = currentUserService;
         _chatRepository = chatRepository;
     }
 
@@ -27,6 +27,17 @@ public class ChatService : IChatService
         var userDtos = MappingProfile.ToUserDto(users);
 
         return userDtos;
+    }
+
+    public async Task<IEnumerable<ChatDto>> GetUserChats()
+    {
+        var userId = _currentUserService.GetCurrentUserId();
+
+        var chats = await _userChatRepository.GetUserChats(userId);
+
+        var chatDtos = MappingProfile.ToChatDto(chats);
+
+        return chatDtos;
     }
 
     public async Task<Chat> CreateChat(CreateChatDto createChatDto)
