@@ -20,4 +20,6 @@ RUN dotnet publish "csharp-chat-api.csproj" -c $BUILD_CONFIGURATION -o /app/publ
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+# Fix permissions for appsettings.json when it gets mounted
+RUN chmod 644 /app/appsettings.json || true
 ENTRYPOINT ["dotnet", "csharp-chat-api.dll"]
