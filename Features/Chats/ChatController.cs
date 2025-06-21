@@ -24,6 +24,14 @@ public class ChatController : ControllerBase
         return Ok(new { message = "Chat created successfully." });
     }
 
+    [HttpPost("{chatId}/messages")]
+    public async Task<IActionResult> CreateMessage(long chatId, [FromBody] CreateMessageDto createMessageDto)
+    {
+        await _messageService.CreateMessage(chatId, createMessageDto);
+
+        return Ok(new { message = "Message created successfully." });
+    }
+
     [HttpGet("{chatId}/users")]
     public async Task<IActionResult> GetChatUsers(long chatId)
     {

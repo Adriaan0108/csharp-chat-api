@@ -20,4 +20,12 @@ public class MessageRepository : IMessageRepository
             .OrderBy(m => m.CreatedAt)
             .ToListAsync();
     }
+
+    public async Task<Message> CreateMessage(Message message)
+    {
+        await _context.Messages.AddAsync(message);
+        await _context.SaveChangesAsync();
+
+        return message;
+    }
 }

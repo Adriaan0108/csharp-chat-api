@@ -33,4 +33,6 @@ public static partial class MappingProfile
     public static partial MessageDto ToMessageDto(Message message);
 
     public static partial IList<MessageDto> ToMessageDto(IEnumerable<Message> messages);
+
+    public static partial Message ToMessage(CreateMessageDto createMessageDto);
 }
