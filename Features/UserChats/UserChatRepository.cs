@@ -31,4 +31,12 @@ public class UserChatRepository : IUserChatRepository
             .Select(uc => uc.Chat)
             .ToListAsync();
     }
+
+    public async Task<UserChat> CreateUserChat(UserChat userChat)
+    {
+        await _context.UserChats.AddAsync(userChat);
+        await _context.SaveChangesAsync();
+
+        return userChat;
+    }
 }

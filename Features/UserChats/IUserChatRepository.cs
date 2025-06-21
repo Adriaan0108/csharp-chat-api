@@ -8,4 +8,6 @@ public interface IUserChatRepository
     Task<IList<User>> GetChatUsers(long chatId);
 
     Task<IList<Chat>> GetUserChats(long userId);
+
+    Task<UserChat> CreateUserChat(UserChat userChat);
 }

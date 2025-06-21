@@ -1,6 +1,7 @@
 using csharp_chat_api.Features;
 using csharp_chat_api.Features.Chats;
 using csharp_chat_api.Features.Messages;
+using csharp_chat_api.Features.UserChats;
 using csharp_chat_api.Features.Users;
 using Riok.Mapperly.Abstractions;
 
@@ -22,6 +23,11 @@ public static partial class MappingProfile
     // chats
     public static partial ChatDto ToChatDto(Chat chat);
     public static partial IList<ChatDto> ToChatDto(IEnumerable<Chat> chats);
+
+    // user chats
+    public static partial UserChat ToUserChat(CreateUserChatDto createUserChatDto);
+
+    public static partial Chat ToChat(CreateChatDto createChatDto);
 
     // messages
     public static partial MessageDto ToMessageDto(Message message);

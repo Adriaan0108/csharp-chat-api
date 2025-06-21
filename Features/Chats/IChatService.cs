@@ -8,4 +8,6 @@ public interface IChatService
     Task<IEnumerable<UserDto>> GetChatUsers(long chatId);
 
     Task<IEnumerable<MessageDto>> GetChatMessages(long chatId);
+
+    Task<Chat> CreateChat(CreateChatDto createChatDto);
 }
