@@ -7,13 +7,19 @@ namespace csharp_chat_api.Infrastructure.Security;
 public class PasswordHasher : IPasswordHasher
 {
     private const int SaltSize = 16; // 128 bits
-    private const int HashSize = 32; // 256 bits
-    private const int DegreeOfParallelism = 8; // Number of threads to use
 
-    private const int Iterations = 4; // Number of iterations
+    private const int HashSize = 32; // 256 bits
+
+    // private const int DegreeOfParallelism = 8; // Number of threads to use
+
+    // private const int Iterations = 4; // Number of iterations
 
     // private const int MemorySize = 1024 * 1024; // 1 GB    (out of memory exception on render free tier)
-    private const int MemorySize = 32 * 1024; // 1 GB
+
+    // Fixed parameters - optimized for Render free tier (512MB RAM)
+    private const int DegreeOfParallelism = 1;
+    private const int Iterations = 3;
+    private const int MemorySize = 32 * 1024; // 32 mb
 
     public string HashPassword(string password)
     {
