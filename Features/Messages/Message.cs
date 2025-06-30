@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using csharp_chat_api.Features.Chats;
 using csharp_chat_api.Features.Shared;
 using csharp_chat_api.Features.Users;
@@ -14,7 +15,7 @@ public class Message : BaseModel
 
     [Column("sender_id")] public long SenderId { get; set; }
 
-    public Chat Chat { get; set; }
+    [JsonIgnore] public Chat Chat { get; set; }
 
     public User Sender { get; set; }
 }

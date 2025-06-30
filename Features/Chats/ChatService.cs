@@ -35,7 +35,16 @@ public class ChatService : IChatService
 
         var chats = await _userChatRepository.GetUserChats(userId);
 
-        var chatDtos = MappingProfile.ToChatDto(chats);
+        // var chatDtos = MappingProfile.ToChatDto(chats);
+
+        var chatDtos = chats.Select(chat =>
+        {
+            var chatDto = MappingProfile.ToChatDto(chat);
+            chatDto.LastMessage = chat.Messages
+                ?.OrderByDescending(m => m.CreatedAt)
+                ?.FirstOrDefault();
+            return chatDto;
+        });
 
         return chatDtos;
     }

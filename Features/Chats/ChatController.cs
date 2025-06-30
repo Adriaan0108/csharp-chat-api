@@ -33,7 +33,7 @@ public class ChatController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetChatMessages()
+    public async Task<IActionResult> GetUserChats()
     {
         var chats = await _chatService.GetUserChats();
 

@@ -28,6 +28,7 @@ public class UserChatRepository : IUserChatRepository
         return await _context.UserChats
             .Where(uc => uc.UserId == userId)
             .Include(uc => uc.Chat)
+            .ThenInclude(c => c.Messages)
             .Select(uc => uc.Chat)
             .ToListAsync();
     }
