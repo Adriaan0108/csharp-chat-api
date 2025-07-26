@@ -30,6 +30,11 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
     }
 
+    public async Task<IList<User>> GetOtherUsers(long userId)
+    {
+        return await _context.Users.Where(u => u.Id != userId).ToListAsync();
+    }
+
     public async Task<User> GetUserById(long id)
     {
         return await _context.Users.FindAsync(id);

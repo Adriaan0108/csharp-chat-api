@@ -12,4 +12,12 @@ public class UserController : ControllerBase
     {
         _userService = userService;
     }
+
+    [HttpGet("other-users")]
+    public async Task<IActionResult> GetOtherUsers()
+    {
+        var users = await _userService.GetOtherUsers();
+
+        return Ok(users);
+    }
 }

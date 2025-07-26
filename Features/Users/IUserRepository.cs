@@ -6,4 +6,5 @@ public interface IUserRepository
     Task<User> GetUserById(long id);
     Task<User> CreateUser(User user);
     Task UpdateUser(User user);
+    Task<IList<User>> GetOtherUsers(long userId);
 }
