@@ -128,4 +128,6 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 
+app.MapHub<MessageHub>("/messagehub");
+
 app.Run();
