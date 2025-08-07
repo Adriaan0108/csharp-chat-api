@@ -11,6 +11,11 @@ public class MessageHub : Hub
         _messageService = messageService;
     }
 
+    public async Task JoinChat(long chatId)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
+    }
+
     public async Task SendMessage(long chatId, CreateMessageDto createMessageDto)
     {
         var message = await _messageService.CreateMessage(chatId, createMessageDto);
