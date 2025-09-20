@@ -85,6 +85,17 @@ builder.Services.AddAuthentication(options =>
                 });
 
                 return context.Response.WriteAsync(result);
+            },
+
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
+
+                // Check if request is for any hub under "/hubs"
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs")) context.Token = accessToken;
+
+                return Task.CompletedTask;
             }
         };
     });
@@ -128,6 +139,6 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 
-app.MapHub<MessageHub>("/messagehub");
+app.MapHub<MessageHub>("/hubs/messages");
 
 app.Run();
